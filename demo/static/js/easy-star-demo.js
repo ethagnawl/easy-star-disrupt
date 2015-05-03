@@ -1,50 +1,54 @@
 var entrance = {
-    x: 0,
-    y: 7
+    y: 0,
+    x: 7
 };
 
 var exit = {
-    x: 7,
-    y: 6
+    y: 7,
+    x: 6
 };
 
 var register = {
-    x: 6,
-    y: 7
+    y: 6,
+    x: 7
 };
 
 var _aisle = {
-    get y () {
-        return Math.floor(Math.random() * 4);
+    get x() {
+        return _.random(2, 5);
     }
 };
 
 var drones = _.extend(_aisle, {
-    x: 3
+    y: 3
 });
 
 var smart_watches = _.extend(_aisle, {
-    x: 5
+    y: 5
 });
 
 var selfie_sticks = _.extend(_aisle, {
-    x: 7
+    y: 7
 });
 
 var aisles = [drones, smart_watches, selfie_sticks];
 
 var store = [
-    [0, 0, 1, 0, 1, 0, 1, 0],
-    [0, 0, 1, 0, 1, 0, 1, 0],
-    [0, 0, 1, 0, 1, 0, 1, 0],
-    [0, 0, 1, 0, 1, 0, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 2]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, -1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
 ];
 
-var EasyStarDemo = function () {
+var EasyStarDemo = function() {
 
     var DEMO_USER_COUNT = 10;
 
@@ -56,22 +60,22 @@ var EasyStarDemo = function () {
 
     easystar.setAcceptableTiles([0]);
 
-    var log_path = function (path) {
+    var log_path = function(path) {
         if (path === null) {
             console.log("Path was not found.");
         } else {
-            var p = path.map(function (sp) {
+            var p = path.map(function(sp) {
                 return "x: " + sp.x + ", y: " + sp.y;
             });
             console.log("Path was found. The path is:", p.join('\n'));
         }
     };
 
-    var navigate = function (begin, end) {
+    var navigate = function(begin, end) {
 
         var path;
 
-        easystar.findPath.call(null, begin.x, begin.y, end.x, end.y, function () {
+        easystar.findPath.call(null, begin.x, begin.y, end.x, end.y, function() {
             log_path(arguments[0]);
             path = arguments[0];
         });
@@ -84,7 +88,7 @@ var EasyStarDemo = function () {
 
     function User() {
 
-        this.story = _.chain(_.range(0, DEMO_USER_MAX_ACTION_COUNT)).reduce(function (memo) {
+        this.story = _.chain(_.range(0, DEMO_USER_MAX_ACTION_COUNT)).reduce(function(memo) {
 
             var last_location = _.last(_.last(memo).path);
 
@@ -112,12 +116,10 @@ var EasyStarDemo = function () {
 
     }
 
-    var DEMO_USERS = _.chain(_.range(0, DEMO_USER_COUNT)).map(function () {
+    var DEMO_USERS = _.chain(_.range(0, DEMO_USER_COUNT)).map(function() {
 
         return new User;
 
     }).value();
-
-    console.log(DEMO_USERS);
 
 }
